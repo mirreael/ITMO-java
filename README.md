@@ -1,3 +1,3 @@
 # ITMO-java
-# ITMO-java
-# ITMO-java
+
+#Repository with ITMO Java labs
