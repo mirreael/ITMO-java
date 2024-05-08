@@ -4,22 +4,35 @@ import lab1.Domain.Common.Account;
 import lab1.Domain.Enums.AccountStatus;
 
 public class CreditAccount extends Account {
+    private final int cashLimit;
     public CreditAccount(int cashAccount,
-                  int accountId,
+                  String name,
                   int bankId,
-                  int clientId,
-                  AccountStatus accountStatus){
-        super(cashAccount, accountId, bankId, clientId, accountStatus);
+                  int cashLimit,
+                  AccountStatus accountStatus,
+                  String address,
+                  String passportNumber){
+        super(cashAccount, name, bankId, accountStatus, address, passportNumber);
+        this.cashLimit = cashLimit;
+        accountType = "credit";
     }
 
+    @Override
     public void WithdrawMoneyFromAccount(int sum){
-        System.out.println("Current cash: " + cashAccount);
-        if (cashAccount - sum < 0 ){
-            System.out.println("account score is less than 0");
+        System.out.println(STR." -> Current cash: \{cashAccount}");
+        if (cashAccount - sum < cashLimit){
+            System.out.println(STR."account score is less than \{cashLimit}");
             throw new IllegalArgumentException();
         }
         cashAccount -= sum;
         System.out.println("Success withdraw money from account");
-        System.out.println("Current cash: " + cashAccount);
+        System.out.println(STR."Current cash: \{cashAccount}");
+    }
+
+    public void AccrueCommission(int commission){
+        System.out.println(STR." -> Current cash: \{cashAccount}");
+        cashAccount -= commission;
+        System.out.println("Success accrue commission to account");
+        System.out.println(STR."Current cash: \{cashAccount}");
     }
 }

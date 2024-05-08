@@ -2,13 +2,13 @@ package lab1.Domain.Entities;
 
 import lab1.Domain.Common.Account;
 import lab1.Domain.Entities.Account.CreditAccount;
-import lab1.Domain.Entities.Account.DepositAccount;
+import lab1.Domain.Entities.Account.DebitAccount;
 
 public class Bank {
     private final String bankName;
     private final int bankId;
-    private int debitPercent;
-    private int depositPercent;
+    private int debitPercent = 5;
+    private int depositPercent = 10;
     private int creditCommission;
 
     public Bank(String bankName, int bankId) {
@@ -30,15 +30,11 @@ public class Bank {
 
     public void setDebitPercent(int debitPercent) {
         this.debitPercent = debitPercent;
-        System.out.println("Debit percent is: "+debitPercent);
+        System.out.println(STR."Debit percent is: \{debitPercent}");
     }
 
     public int getDepositPercent() {
         return depositPercent;
-    }
-
-    private void setDepositPercent(int depositPercent) {
-        this.depositPercent = depositPercent;
     }
 
     public int getBankId() {
@@ -49,7 +45,30 @@ public class Bank {
         return bankName;
     }
 
-    public void CalculateCashAccountWithDebitPercent(Account debitAccount) {
+    private void setDepositPercent(Account account) {
+        if (account.GetCashAccount() <= 50000){
+            depositPercent = 3;
+        } else if (account.GetCashAccount() <= 100000) {
+            depositPercent = 4;
+        } else {
+            depositPercent = 5;
+        }
+    }
+    public void CalculatePercent(Account account){
+        System.out.println(STR."Calculate percent for \{account.getAccountType()} account");
+        switch (account.getAccountType()){
+            case "debit":
+                CalculateCashAccountWithDebitPercent(account);
+                break;
+            case "deposit":
+                CalculateCashAccountWithDepositPercent(account);
+                break;
+            case "credit":
+                throw new IllegalArgumentException("Credit account hasn't cash percent");
+        }
+    }
+
+    private void CalculateCashAccountWithDebitPercent(Account debitAccount) {
         try {
             int currentCash = debitAccount.GetCashAccount();
             int percentCash = (int)(((double)debitPercent / 100.0) * currentCash);
@@ -60,21 +79,11 @@ public class Bank {
         }
     }
 
-    private void CalculateDepositPercent(int currentCash) {
-        if (currentCash <= 50000){
-            setDepositPercent(3);
-        } else if (currentCash <= 100000) {
-            setDepositPercent(4);
-        } else {
-            setDepositPercent(5);
-        }
-    }
-
-    public void CalculateCashAccountWithDepositPercent(DepositAccount depositAccount){
-        CalculateDepositPercent(depositAccount.GetCashAccount());
+    private void CalculateCashAccountWithDepositPercent(Account depositAccount){
+        setDepositPercent(depositAccount);
         try {
             int currentCash = depositAccount.GetCashAccount();
-            int percentCash = depositPercent / 100 * currentCash;
+            int percentCash = (int)(((double)depositPercent / 100.0) * currentCash);
             depositAccount.PutMoneyIntoAccount(percentCash);
         } catch (IllegalArgumentException e) {
             System.out.println("Deposit percent is incorrect");
@@ -84,7 +93,13 @@ public class Bank {
 
     public void CalculateCashWithCreditCommission(CreditAccount creditAccount){
         if (creditAccount.GetCashAccount() < 0){
-            creditAccount.WithdrawMoneyFromAccount(creditCommission / 100 * creditAccount.GetCashAccount());
+            try {
+                int commission = (int)((double)creditCommission / 100 * Math.abs(creditAccount.GetCashAccount()));
+                creditAccount.AccrueCommission(commission);
+            } catch (IllegalArgumentException e) {
+                System.out.println("Commission is incorrect");
+                throw new IllegalArgumentException("incorrect commission");
+            }
         }
     }
 }

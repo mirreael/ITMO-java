@@ -4,47 +4,38 @@ import lab1.Domain.Enums.AccountStatus;
 
 public abstract class Account {
     protected int cashAccount;
-    private int accountId;
-    private int bankId;
-    private int clientId;
-    private AccountStatus status;
+    protected String name;
+    protected int bankId;
+    protected AccountStatus status;
+    protected String accountType;
+    private String address;
+    private String passportNumber;
 
     public Account(int cashAccount,
-                   int accountId,
+                   String name,
                    int bankId,
-                   int clientId,
-                   AccountStatus accountStatus){
+                   AccountStatus accountStatus,
+                   String address,
+                   String passportNumber){
         this.cashAccount = cashAccount;
-        this.accountId = accountId;
+        this.name = name;
         this.bankId = bankId;
-        this.clientId = clientId;
         this.status = accountStatus;
+        this.address = address;
+        this.passportNumber = passportNumber;
     }
 
     public int GetCashAccount(){
         return cashAccount;
     }
-    public int getAccountId(){
-        return accountId;
-    }
 
-    public int getBankId() {
-        return bankId;
-    }
-
-    public int getClientId() {
-        return clientId;
-    }
-
-    public AccountStatus getStatus() {
-        return status;
-    }
+    public String getAccountType(){return accountType;}
     public void PutMoneyIntoAccount(int sum){
-        System.out.println(" -> Current cash: " + cashAccount);
+        System.out.println(STR." -> Current cash: \{cashAccount}");
         try {
             cashAccount += sum;
-            System.out.println("Successful put money into account: +" + sum);
-            System.out.println("Current cash: " + cashAccount);
+            System.out.println(STR."Successful put money into account: +\{sum}");
+            System.out.println(STR."Current cash: \{cashAccount}");
         } catch (IllegalArgumentException e){
             System.out.println(e);
             System.out.println("Error with put money into account");
