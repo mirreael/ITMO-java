@@ -1,6 +1,5 @@
 package lab1.Domain.Entities;
 
-import lab1.Application.Interfaces.ICentralBank;
 import lab1.Domain.Common.Account;
 
 public class CentralBank implements ICentralBank {
