@@ -14,16 +14,5 @@ public class DepositAccount extends Account {
         super(cashAccount, name, bankId, accountStatus, address, passportNumber);
         accountType = "deposit";
     }
-    @Override
-    public void WithdrawMoneyFromAccount(int sum){
-        System.out.println(STR."Current cash: \{cashAccount}");
-        if (cashAccount - sum < 0 ){
-            System.out.println("account score is less than 0");
-            throw new IllegalArgumentException();
-        }
-        cashAccount -= sum;
-        System.out.println("Success withdraw money from account");
-        System.out.println(STR."Current cash: \{cashAccount}");
-    }
 
 }

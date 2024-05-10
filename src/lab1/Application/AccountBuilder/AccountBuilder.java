@@ -21,7 +21,7 @@ public class AccountBuilder {
         return this;
     }
 
-    public AccountBuilder setAccountId(String name) {
+    public AccountBuilder setName(String name) {
         this.name = name;
         return this;
     }
@@ -43,6 +43,11 @@ public class AccountBuilder {
 
     public AccountBuilder setCashLimit(int cashLimit) {
         this.cashLimit = cashLimit;
+        return this;
+    }
+
+    public AccountBuilder setAccountType(String accountType){
+        this.accountType = accountType;
         return this;
     }
 

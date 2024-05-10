@@ -19,6 +19,7 @@ public class CreditAccount extends Account {
 
     @Override
     public void WithdrawMoneyFromAccount(int sum){
+        CheckAccountStatus();
         System.out.println(STR." -> Current cash: \{cashAccount}");
         if (cashAccount - sum < cashLimit){
             System.out.println(STR."account score is less than \{cashLimit}");

@@ -2,7 +2,6 @@ package lab1.Domain.Entities;
 
 import lab1.Domain.Common.Account;
 import lab1.Domain.Entities.Account.CreditAccount;
-import lab1.Domain.Entities.Account.DebitAccount;
 
 public class Bank {
     private final String bankName;
