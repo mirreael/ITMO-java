@@ -8,7 +8,7 @@ public class Bank {
     private final int bankId;
     private int debitPercent = 5;
     private int depositPercent = 10;
-    private int creditCommission;
+    private int creditCommission = 10;
 
     public Bank(String bankName, int bankId) {
         this.bankId = bankId;
@@ -30,6 +30,10 @@ public class Bank {
     public void setDebitPercent(int debitPercent) {
         this.debitPercent = debitPercent;
         System.out.println(STR."Debit percent is: \{debitPercent}");
+    }
+
+    public void setDepositPercent(int depositPercent) {
+        this.depositPercent = depositPercent;
     }
 
     public int getDepositPercent() {

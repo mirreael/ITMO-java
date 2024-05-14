@@ -7,11 +7,10 @@ public class DepositAccount extends Account {
 
     public DepositAccount(int cashAccount,
                           String name,
-                          int bankId,
                           AccountStatus accountStatus,
                           String address,
                           String passportNumber) {
-        super(cashAccount, name, bankId, accountStatus, address, passportNumber);
+        super(cashAccount, name, accountStatus, address, passportNumber);
         accountType = "deposit";
     }
 

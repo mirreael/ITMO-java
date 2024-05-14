@@ -10,7 +10,6 @@ public class AccountBuilder {
     private int cashLimit;
     private int cashAccount;
     private String name;
-    private int bankId;
     private String accountType;
     private AccountStatus accountStatus;
     private String address;
@@ -26,10 +25,6 @@ public class AccountBuilder {
         return this;
     }
 
-    public AccountBuilder setBankId(int bankId) {
-        this.bankId = bankId;
-        return this;
-    }
 
     public AccountBuilder setAddress(String address) {
         this.address = address;
@@ -57,15 +52,15 @@ public class AccountBuilder {
         setAccountStatus();
         return switch (accountType) {
             case "debit" -> {
-                account = new DebitAccount(cashAccount, name, bankId, accountStatus, address, passportNumber);
+                account = new DebitAccount(cashAccount, name, accountStatus, address, passportNumber);
                 yield account;
             }
             case "deposit" -> {
-                account = new DepositAccount(cashAccount, name, bankId, accountStatus, address, passportNumber);
+                account = new DepositAccount(cashAccount, name, accountStatus, address, passportNumber);
                 yield account;
             }
             case "credit" -> {
-                account = new CreditAccount(cashAccount, name, bankId, cashLimit, accountStatus, address, passportNumber);
+                account = new CreditAccount(cashAccount, name, cashLimit, accountStatus, address, passportNumber);
                 yield account;
             }
             default -> throw new IllegalArgumentException("Account is incorrect");

@@ -4,15 +4,14 @@ import lab1.Domain.Common.Account;
 import lab1.Domain.Enums.AccountStatus;
 
 public class CreditAccount extends Account {
-    private final int cashLimit;
+    private int cashLimit = -1000;
     public CreditAccount(int cashAccount,
                   String name,
-                  int bankId,
                   int cashLimit,
                   AccountStatus accountStatus,
                   String address,
                   String passportNumber){
-        super(cashAccount, name, bankId, accountStatus, address, passportNumber);
+        super(cashAccount, name, accountStatus, address, passportNumber);
         this.cashLimit = cashLimit;
         accountType = "credit";
     }

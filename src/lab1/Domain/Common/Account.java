@@ -4,9 +4,8 @@ import lab1.Domain.Enums.AccountStatus;
 public abstract class Account {
     private final TransactionHistory transactionHistory = new TransactionHistory();
     private Memento memento;
-    protected int cashAccount;
+    protected int cashAccount = 0;
     protected String name;
-    protected int bankId;
     protected AccountStatus status;
     protected String accountType;
     private String address;
@@ -14,13 +13,11 @@ public abstract class Account {
 
     public Account(int cashAccount,
                    String name,
-                   int bankId,
                    AccountStatus accountStatus,
                    String address,
                    String passportNumber){
         this.cashAccount = cashAccount;
         this.name = name;
-        this.bankId = bankId;
         this.status = accountStatus;
         this.address = address;
         this.passportNumber = passportNumber;
@@ -56,6 +53,8 @@ public abstract class Account {
     }
 
     public void PutMoneyIntoAccount(int sum){
+        memento = SaveState();
+        transactionHistory.History.push(memento);
         System.out.println(STR." -> Current cash: \{cashAccount}");
         try {
             cashAccount += sum;
@@ -68,16 +67,12 @@ public abstract class Account {
     }
 
     public void TransferMoneyToAccount(Account toAccount, int sum){
-        Memento mementoFrom = SaveState();
-        Memento mementoTo = toAccount.SaveState();
         try {
             this.WithdrawMoneyFromAccount(sum);
             toAccount.PutMoneyIntoAccount(sum);
             System.out.println(STR."Successful transfer money: \{this.getName()} -> \{toAccount.getName()}");
         } catch (IllegalArgumentException e){
             System.out.println("Exception with transfer money");
-            RestoreState();
-            toAccount.RestoreState();
         }
     }
 
@@ -89,8 +84,7 @@ public abstract class Account {
     }
 
     public Memento SaveState(){
-        System.out.println("Save current state");
-        return new Memento(cashAccount, name, bankId, status, accountType, address, passportNumber);
+        return new Memento(cashAccount, name, status, accountType, address, passportNumber);
     }
 
     public void RestoreState(){
@@ -99,4 +93,5 @@ public abstract class Account {
         this.cashAccount = memento.getCashAccount();
         System.out.println(STR."Current cash: \{cashAccount}");
     }
+
 }

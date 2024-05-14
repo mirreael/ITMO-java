@@ -11,10 +11,9 @@ public class Memento {
     private String address;
     private String passportNumber;
 
-    public Memento(int cashAccount, String name, int bankId, AccountStatus status, String accountType, String address, String passportNumber) {
+    public Memento(int cashAccount, String name, AccountStatus status, String accountType, String address, String passportNumber) {
         this.cashAccount = cashAccount;
         this.name = name;
-        this.bankId = bankId;
         this.status = status;
         this.accountType = accountType;
         this.address = address;
